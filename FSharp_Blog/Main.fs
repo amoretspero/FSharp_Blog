@@ -38,9 +38,14 @@ module Site =
     open WebSharper.UI.Next.Html
 
     let HomePage ctx =
+        let age = if (System.DateTime.Today.CompareTo(System.DateTime.Parse(System.DateTime.Now.Year.ToString() + "-07-07")) <= 0) then System.DateTime.Now.Year - 1994 else System.DateTime.Now.Year - 1994 + 1
         Templating.Main ctx EndPoint.Home "Home" [
-            h1 [text "Say Hi to the server!"]
-            div [client <@ Client.Main() @>]
+            h1Attr [attr.style "padding: 0px 20px;"] [text "Blog"]
+            hr []
+            h4Attr ([(attr.``class`` "text-info"); (attr.style "padding: 0px 20px;")] |> Seq.ofList) 
+                   ([(text "Practicing WebSharper & Personal Blog")] |> Seq.ofList)
+            hr []
+            Client.PersonalInfo(age)
         ]
 
     let AboutPage ctx =
